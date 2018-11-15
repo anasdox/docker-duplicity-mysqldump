@@ -23,6 +23,10 @@ RUN set -x && \
 
 ADD backup.sh /
 
+RUN echo '@hourly  /backup.sh' > /etc/crontabs/root
+
 VOLUME ["/home/duplicity/.cache/duplicity", "/home/duplicity/.gnupg"]
 
 USER duplicity
+
+CMD ['crond','-l 2', '-f']
