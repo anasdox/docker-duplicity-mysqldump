@@ -46,8 +46,6 @@ do
     shift
 done
 
-
-
 if [[ -z ${DATABASE_HOST} ]]; then
     DATABASE_HOST=localhost
 fi
@@ -80,12 +78,6 @@ echo "-- Backup --"
 [ -d "${DATABASE_DUMP_DIR_PATH}" ] || mkdir -p "${DATABASE_DUMP_DIR_PATH}"
 
 echo "-- Dump database ${DATABASE_NAME} --"
-echo "mysqldump \
-    -h ${DATABASE_HOST} \
-    -u${DATABASE_USER} \
-    -p${DATABASE_PASSWORD} \
-    ${DATABASE_NAME} > ${DATABASE_DUMP_DIR_PATH}/${DATABASE_NAME}.sql"
-
 mysqldump \
     -h ${DATABASE_HOST} \
     -u${DATABASE_USER} \
@@ -94,6 +86,9 @@ mysqldump \
 
 echo "-- Push the backup via duplicity --"
 duplicity \
+    --full-if-older-than=6M \
+    --allow-source-mismatch \
+    --rsync-options='-e "ssh -i /id_rsa"' \
     --no-encryption \
     --include "${DUPLICITY_INCLUD}" \
     --exclude "**" \
