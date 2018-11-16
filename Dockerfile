@@ -13,7 +13,7 @@ RUN set -x && \
     update-ca-certificates
 
 RUN set -x && \
-    adduser -D -u 1000 duplicity && \
+    adduser -D -u 82 duplicity && \
     mkdir -p /home/duplicity/.cache/duplicity && \
     mkdir -p /home/duplicity/.gnupg && \
     su - duplicity -c 'duplicity --version' && \
