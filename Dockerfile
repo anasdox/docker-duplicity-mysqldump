@@ -1,4 +1,4 @@
-FROM alpine:3.6
+FROM alpine:3.8
 
 ENV HOME=/home/duplicity
 WORKDIR /home/duplicity
@@ -23,10 +23,6 @@ RUN set -x && \
 
 ADD backup.sh /
 
-RUN echo '@hourly  /backup.sh' > /etc/crontabs/root
-
-VOLUME ["/home/duplicity/.cache/duplicity", "/home/duplicity/.gnupg"]
-
-USER duplicity
+RUN echo '@hourly /bin/su -c "/backup.sh" -s /bin/bash duplicity' > /etc/crontabs/root
 
 CMD ['crond','-l 2', '-f']
