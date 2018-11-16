@@ -25,4 +25,4 @@ ADD backup.sh /
 
 RUN echo '@hourly /bin/su -c "/backup.sh" -s /bin/bash duplicity' > /etc/crontabs/root
 
-CMD ['crond','-l 2', '-f']
+CMD ["crond", "-f"]
