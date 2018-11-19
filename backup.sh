@@ -74,7 +74,7 @@ if [[ -z ${DUPLICITY_INCLUD} ]]; then
     error "DUPLICITY_INCLUD env variable is mandatory"
 fi
 
-echo "-- Backup --"
+echo "-- Backup $(date) --"
 [ -d "${DATABASE_DUMP_DIR_PATH}" ] || mkdir -p "${DATABASE_DUMP_DIR_PATH}"
 
 echo "-- Dump database ${DATABASE_NAME} --"

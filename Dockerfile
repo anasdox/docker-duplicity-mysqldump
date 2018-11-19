@@ -3,12 +3,13 @@ FROM alpine:3.8
 ENV HOME=/home/duplicity
 WORKDIR /home/duplicity
 
-ENV BUILD_DEPS="" \
+ENV BUILD_DEPS="tzdata" \
     RUNTIME_DEPS="bash mysql-client ca-certificates duplicity lftp openssh openssl rsync shadow"
 
 RUN set -x && \
     apk add --update $RUNTIME_DEPS && \
     apk add --virtual build_deps $BUILD_DEPS && \
+    cp /usr/share/zoneinfo/Europe/Paris /etc/localtime \
     apk del build_deps && \
     update-ca-certificates
 
