@@ -9,7 +9,7 @@ ENV BUILD_DEPS="tzdata" \
 RUN set -x && \
     apk add --update $RUNTIME_DEPS && \
     apk add --virtual build_deps $BUILD_DEPS && \
-    cp /usr/share/zoneinfo/Europe/Paris /etc/localtime \
+    cp /usr/share/zoneinfo/Europe/Paris /etc/localtime && \
     apk del build_deps && \
     update-ca-certificates
 
@@ -24,6 +24,7 @@ RUN set -x && \
     chown -R duplicity:duplicity /home/duplicity/
 
 ADD backup.sh /
+ADD restore.sh /
 
 RUN echo '@hourly /bin/su -c "/backup.sh" -s /bin/bash duplicity' > /etc/crontabs/root
 
