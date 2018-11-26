@@ -84,18 +84,21 @@ duplicity \
     
 
 echo "-- Import database ${DATABASE_NAME} --"
+echo "-- set FOREIGN_KEY_CHECKS to 0 --"
 mysql \
     -h ${DATABASE_HOST} \
     -u${DATABASE_USER} \
-    -p${DATABASE_PASSWORD}
+    -p${DATABASE_PASSWORD} \
     ${DATABASE_NAME} -e "SET GLOBAL FOREIGN_KEY_CHECKS=0;"
+echo "-- retore dump --"
 mysql \
     -h ${DATABASE_HOST} \
     -u${DATABASE_USER} \
     -p${DATABASE_PASSWORD} \
     ${DATABASE_NAME} < "${DATABASE_DUMP_DIR_PATH}/${DATABASE_NAME}.sql"
+echo "-- set FOREIGN_KEY_CHECKS to 1 --"
 mysql \
     -h ${DATABASE_HOST} \
     -u${DATABASE_USER} \
-    -p${DATABASE_PASSWORD}
+    -p${DATABASE_PASSWORD} \
     ${DATABASE_NAME} -e "SET GLOBAL FOREIGN_KEY_CHECKS=1;"
