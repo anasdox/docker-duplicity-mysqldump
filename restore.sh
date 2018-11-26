@@ -87,5 +87,15 @@ echo "-- Import database ${DATABASE_NAME} --"
 mysql \
     -h ${DATABASE_HOST} \
     -u${DATABASE_USER} \
+    -p${DATABASE_PASSWORD}
+    ${DATABASE_NAME} < "SET GLOBAL FOREIGN_KEY_CHECKS=0;"
+mysql \
+    -h ${DATABASE_HOST} \
+    -u${DATABASE_USER} \
     -p${DATABASE_PASSWORD} \
     ${DATABASE_NAME} < "${DATABASE_DUMP_DIR_PATH}/${DATABASE_NAME}.sql"
+mysql \
+    -h ${DATABASE_HOST} \
+    -u${DATABASE_USER} \
+    -p${DATABASE_PASSWORD}
+    ${DATABASE_NAME} < "SET GLOBAL FOREIGN_KEY_CHECKS=1;"
