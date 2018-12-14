@@ -88,7 +88,7 @@ echo "-- Push the backup via duplicity --"
 duplicity \
     --full-if-older-than=6M \
     --allow-source-mismatch \
-    --rsync-options='-se "ssh -i /id_rsa -o StrictHostKeyChecking=no"' \
+    --rsync-options='-e "ssh -i /id_rsa -o StrictHostKeyChecking=no"' \
     --no-encryption \
     --include "${DUPLICITY_INCLUD}" \
     --exclude "**" \
